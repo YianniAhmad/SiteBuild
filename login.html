@@ -2,60 +2,69 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Islamic Studies | Home</title>
+  <title>Login | Islamic Studies</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      text-align: center;
+      padding: 50px;
+    }
+    input, button {
+      padding: 10px;
+      margin: 10px;
+      font-size: 16px;
+      width: 250px;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Navbar -->
-  <nav>
-    <div class="logo">📖 Islamic Studies</div>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="aqidah.html">Aqidah</a>
-      <a href="fiqh.html">Fiqh</a>
-      <a href="history.html">History</a>
-      <a href="#" id="logout-btn" style="display:none;">Logout</a>
-    </div>
-  </nav>
+  <h1>🔐 Login or Sign Up</h1>
 
-  <!-- Main content -->
-  <div class="container">
-    <h1>Welcome to Islamic Studies</h1>
-    <p id="user-welcome">Checking login...</p>
-    <p>Choose a section above to begin learning. At the end of each section, you'll find a mini quiz to test your knowledge in sha Allah.</p>
-  </div>
+  <input type="email" id="email" placeholder="Email" /><br>
+  <input type="password" id="password" placeholder="Password (min 6 chars)" /><br>
+  <button onclick="login()">Login</button>
+  <button onclick="signup()">Sign Up</button>
 
-  <!-- Supabase Setup + Auth Check -->
+  <p id="status"></p>
+
   <script>
     const SUPABASE_URL = 'https://hfcjboxijvkycdyepwky.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhmY2pib3hpanZreWNkeWVwd2t5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTMzOTUxMjMsImV4cCI6MjA2ODk3MTEyM30.7hc52WzkRkxSUmbJAAsHLfpVZ_4kblA0MqeBAum1XHY';
-
     const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    const userWelcome = document.getElementById('user-welcome');
-    const logoutBtn = document.getElementById('logout-btn');
+    const status = document.getElementById('status');
 
-    async function checkLogin() {
-      const { data: { user } } = await supabase.auth.getUser();
-
-      if (!user) {
-        window.location.href = "login.html"; // redirect to login if not logged in
+    async function login() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) {
+        status.textContent = error.message;
       } else {
-        userWelcome.textContent = `Asalaamu Alaykum Wa Rahmatullahi Wa Barakatuhu, ${user.email}`;
-        logoutBtn.style.display = "inline-block";
+        status.textContent = "✅ Logged in. Redirecting...";
+        setTimeout(() => window.location.href = "index.html", 1500);
       }
     }
 
-    logoutBtn.addEventListener('click', async () => {
-      await supabase.auth.signOut();
-      window.location.href = "login.html";
-    });
-
-    checkLogin();
+    async function signup() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const { error } = await supabase.auth.signUp({ email, password });
+      if (error) {
+        status.textContent = error.message;
+      } else {
+        status.textContent = "✅ Check your email to confirm sign up.";
+      }
+    }
   </script>
+
+</body>
+</html>
+
 
 </body>
 </html>

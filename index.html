@@ -2,247 +2,30 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Islamic Study & Quiz</title>
+  <title>Islamic Studies | Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    /* === Base Styles === */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, sans-serif;
-      background-color: #fdfdfd;
-      color: #333;
-      line-height: 1.6;
-      padding-top: 80px;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    /* === Navigation === */
-    nav {
-      background-color: #0c4b33;
-      color: white;
-      padding: 16px 24px;
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 999;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-size: 20px;
-      font-weight: bold;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 20px;
-    }
-
-    .nav-links a {
-      color: #fff;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover {
-      color: #d1fae5;
-    }
-
-    /* === Layout === */
-    .container {
-      max-width: 800px;
-      margin: auto;
-      padding: 20px;
-    }
-
-    section {
-      background-color: #ffffff;
-      padding: 24px;
-      border: 1px solid #e0e0e0;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-      margin-bottom: 40px;
-    }
-
-    h1, h2 {
-      color: #0c4b33;
-      margin-bottom: 12px;
-    }
-
-    ul {
-      padding-left: 20px;
-    }
-
-    /* === Quiz === */
-    .question {
-      margin-bottom: 24px;
-    }
-
-    label {
-      display: block;
-      margin: 6px 0;
-    }
-
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      background: #0c4b33;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #166d4b;
-    }
-
-    #result {
-      margin-top: 20px;
-      font-weight: bold;
-      font-size: 18px;
-    }
-
-    /* === Responsive === */
-    @media (max-width: 600px) {
-      .nav-links {
-        flex-direction: column;
-        align-items: flex-end;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- === Navigation === -->
   <nav>
     <div class="logo">📖 Islamic Studies</div>
     <div class="nav-links">
-      <a href="#home">Home</a>
-      <a href="#aqidah">Aqidah</a>
-      <a href="#fiqh">Fiqh</a>
-      <a href="#history">History</a>
-      <a href="#quiz">Quiz</a>
+      <a href="index.html">Home</a>
+      <a href="aqidah.html">Aqidah</a>
+      <a href="fiqh.html">Fiqh</a>
+      <a href="history.html">History</a>
+     
     </div>
   </nav>
 
-  <!-- === Content Container === -->
   <div class="container">
-
-    <!-- === Home Section === -->
-    <section id="home">
+    <section>
       <h1>Welcome to Islamic Studies</h1>
-      <p>This platform provides basic Islamic knowledge and a fun quiz to test your learning. Navigate through topics like Aqidah, Fiqh, and Islamic History, then try the quiz!</p>
+      <p>This platform provides simple and clear Islamic knowledge. Learn about core beliefs (Aqidah), Islamic rulings (Fiqh), our history, and test yourself with a quick quiz!</p>
     </section>
-
-    <!-- === Aqidah Section === -->
-    <section id="aqidah">
-      <h2>Aqidah (Belief)</h2>
-      <p>Aqidah refers to the Islamic creed — the core beliefs every Muslim holds. The foundation of Aqidah includes:</p>
-      <ul>
-        <li>Belief in Allah</li>
-        <li>Belief in Angels</li>
-        <li>Belief in Prophets</li>
-        <li>Belief in Books</li>
-        <li>Belief in the Day of Judgment</li>
-        <li>Belief in Divine Decree (Qadr)</li>
-      </ul>
-    </section>
-
-    <!-- === Fiqh Section === -->
-    <section id="fiqh">
-      <h2>Fiqh (Islamic Law)</h2>
-      <p>Fiqh is the understanding of Islamic rulings derived from the Qur’an and Sunnah. It covers areas like:</p>
-      <ul>
-        <li>Prayer (Salah)</li>
-        <li>Fasting (Sawm)</li>
-        <li>Zakah (Charity)</li>
-        <li>Hajj (Pilgrimage)</li>
-        <li>Purification (Taharah)</li>
-      </ul>
-    </section>
-
-    <!-- === History Section === -->
-    <section id="history">
-      <h2>Islamic History</h2>
-      <p>Islamic history spans over 1400 years, starting with the life of Prophet Muhammad ﷺ in Makkah and Madinah. Key events include:</p>
-      <ul>
-        <li>The Revelation of the Qur’an</li>
-        <li>The Hijrah (Migration to Madinah)</li>
-        <li>The Battles of Badr, Uhud, and Khandaq</li>
-        <li>The Caliphate of Abu Bakr, Umar, Uthman, and Ali (RA)</li>
-      </ul>
-    </section>
-
-    <!-- === Quiz Section === -->
-    <section id="quiz">
-      <h2>Quick Quiz</h2>
-
-      <div class="question">
-        <p>1. What is the first pillar of Islam?</p>
-        <label><input type="radio" name="q1" value="A"> Salah</label>
-        <label><input type="radio" name="q1" value="B"> Zakah</label>
-        <label><input type="radio" name="q1" value="C"> Shahadah</label>
-        <label><input type="radio" name="q1" value="D"> Sawm</label>
-      </div>
-
-      <div class="question">
-        <p>2. Who is the final Prophet in Islam?</p>
-        <label><input type="radio" name="q2" value="A"> Isa (Jesus)</label>
-        <label><input type="radio" name="q2" value="B"> Musa (Moses)</label>
-        <label><input type="radio" name="q2" value="C"> Ibrahim (Abraham)</label>
-        <label><input type="radio" name="q2" value="D"> Muhammad ﷺ</label>
-      </div>
-
-      <div class="question">
-        <p>3. What month do Muslims fast in?</p>
-        <label><input type="radio" name="q3" value="A"> Muharram</label>
-        <label><input type="radio" name="q3" value="B"> Ramadan</label>
-        <label><input type="radio" name="q3" value="C"> Shawwal</label>
-        <label><input type="radio" name="q3" value="D"> Dhul-Hijjah</label>
-      </div>
-
-      <button onclick="submitQuiz()">Submit Answers</button>
-
-      <div id="result"></div>
-    </section>
-
   </div>
-
-  <!-- === Script === -->
-  <script>
-    function submitQuiz() {
-      const answers = {
-        q1: "C",
-        q2: "D",
-        q3: "B"
-      };
-
-      let score = 0;
-      let total = Object.keys(answers).length;
-
-      for (let q in answers) {
-        const selected = document.querySelector(`input[name="${q}"]:checked`);
-        if (selected && selected.value === answers[q]) {
-          score++;
-        }
-      }
-
-      const result = document.getElementById("result");
-      result.textContent = `You got ${score} out of ${total} correct. ${score === total ? "MashaAllah! 🌙" : "Keep learning, InshaAllah!"}`;
-    }
-  </script>
 
 </body>
 </html>
+

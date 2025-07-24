@@ -1,1 +1,114 @@
-<h1>Hi guys</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Online Tic Tac Toe</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+      background: #f9f9f9;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    #board {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      gap: 8px;
+      justify-content: center;
+      margin: 0 auto;
+    }
+    .cell {
+      width: 100px;
+      height: 100px;
+      background: #fff;
+      border: 2px solid #333;
+      font-size: 64px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      user-select: none;
+    }
+    .cell.disabled {
+      cursor: not-allowed;
+      background: #eee;
+    }
+    #status {
+      margin-top: 20px;
+      font-size: 20px;
+      min-height: 24px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Online Tic Tac Toe</h1>
+  <div id="board"></div>
+  <div id="status">Connecting to server...</div>
+
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script>
+    const socket = io('https://tictactoe-server.2079aahmad.repl.co');
+    const board = document.getElementById('board');
+    const status = document.getElementById('status');
+    let symbol = null;
+    let myTurn = false;
+    let gameOver = false;
+
+    // Create 9 cells
+    for(let i = 0; i < 9; i++) {
+      const cell = document.createElement('div');
+      cell.classList.add('cell');
+      cell.dataset.index = i;
+      cell.addEventListener('click', () => {
+        if(myTurn && !cell.textContent && !gameOver) {
+          socket.emit('move', i);
+        }
+      });
+      board.appendChild(cell);
+    }
+
+    socket.on('connect', () => {
+      status.textContent = 'Connected. Waiting for game to start...';
+    });
+
+    socket.on('start', (s) => {
+      symbol = s;
+      myTurn = (symbol === 'X');
+      status.textContent = `You are "${symbol}". ${myTurn ? "Your turn!" : "Opponent's turn."}`;
+      clearBoard();
+      gameOver = false;
+    });
+
+    socket.on('move', ({index, symbol: s}) => {
+      const cell = board.querySelector(`[data-index='${index}']`);
+      if(cell) cell.textContent = s;
+      myTurn = (s !== symbol);
+      if (!gameOver) {
+        status.textContent = myTurn ? "Your turn!" : "Opponent's turn.";
+      }
+    });
+
+    socket.on('message', (msg) => {
+      status.textContent = msg;
+      if(msg.toLowerCase().includes('wins') || msg.toLowerCase().includes('draw')) {
+        gameOver = true;
+        myTurn = false;
+      }
+    });
+
+    function clearBoard() {
+      board.querySelectorAll('.cell').forEach(cell => cell.textContent = '');
+    }
+
+    socket.on('disconnect', () => {
+      status.textContent = 'Disconnected from server.';
+      gameOver = true;
+    });
+  </script>
+
+</body>
+</html>

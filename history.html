@@ -1,1 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>History | Islamic Studies</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">📖 Islamic Studies</div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="aqidah.html">Aqidah</a>
+      <a href="fiqh.html">Fiqh</a>
+      <a href="history.html">History</a>
+      <a href="quiz.html">Quiz</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container">
+
+    <section>
+      <h1>Islamic History</h1>
+      <p>The history of Islam begins with the life of the Prophet Muhammad ﷺ in 7th-century Arabia. It includes major events like the revelation of the Qur’an, the migration to Madinah, and the spread of Islam through righteous leadership.</p>
+      <ul>
+        <li><strong>610 CE:</strong> First revelation to Muhammad ﷺ in Cave Hira.</li>
+        <li><strong>622 CE (Hijrah):</strong> Migration from Makkah to Madinah.</li>
+        <li><strong>Battle of Badr:</strong> First major battle between Muslims and Quraysh.</li>
+        <li><strong>Rightly Guided Caliphs:</strong> Abu Bakr, Umar, Uthman, Ali (RA).</li>
+        <li><strong>Preservation of Qur’an:</strong> Compiled during Uthman’s Caliphate.</li>
+      </ul>
+    </section>
+
+    <!-- Quiz Section -->
+    <section>
+      <h2>Quick Quiz: History</h2>
+
+      <div class="question">
+        <p>1. Where was the first revelation received?</p>
+        <label><input type="radio" name="q1" value="A"> Cave Hira</label>
+        <label><input type="radio" name="q1" value="B"> Cave Thawr</label>
+        <label><input type="radio" name="q1" value="C"> Mount Uhud</label>
+      </div>
+
+      <div class="question">
+        <p>2. Who was the first Caliph after Prophet Muhammad ﷺ?</p>
+        <label><input type="radio" name="q2" value="A"> Ali (RA)</label>
+        <label><input type="radio" name="q2" value="B"> Umar (RA)</label>
+        <label><input type="radio" name="q2" value="C"> Abu Bakr (RA)</label>
+      </div>
+
+      <button onclick="submitQuiz()">Submit Quiz</button>
+      <div id="result"></div>
+    </section>
+
+  </div>
+
+  <script>
+    function submitQuiz() {
+      const answers = {
+        q1: "A",
+        q2: "C"
+      };
+
+      let score = 0;
+      let total = Object.keys(answers).length;
+
+      for (let q in answers) {
+        const selected = document.querySelector(`input[name="${q}"]:checked`);
+        if (selected && selected.value === answers[q]) {
+          score++;
+        }
+      }
+
+      const result = document.getElementById("result");
+      result.textContent = `You got ${score} out of ${total} correct. ${score === total ? "BarakAllahu feek!" : "Well tried, keep learning!"}`;
+    }
+  </script>
+
+</body>
+</html>
 

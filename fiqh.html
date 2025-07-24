@@ -1,1 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fiqh | Islamic Studies</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
 
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">📖 Islamic Studies</div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="aqidah.html">Aqidah</a>
+      <a href="fiqh.html">Fiqh</a>
+      <a href="history.html">History</a>
+      <a href="quiz.html">Quiz</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container">
+
+    <section>
+      <h1>Fiqh (Islamic Jurisprudence)</h1>
+      <p>Fiqh is the understanding and application of Islamic rulings based on the Qur’an and Sunnah. It guides Muslims in their daily life — including worship, transactions, and character.</p>
+      <ul>
+        <li><strong>Salah (Prayer):</strong> Obligatory five daily prayers.</li>
+        <li><strong>Zakah (Charity):</strong> Purifying wealth by giving to the needy.</li>
+        <li><strong>Sawm (Fasting):</strong> Fasting from dawn to sunset in Ramadan.</li>
+        <li><strong>Hajj (Pilgrimage):</strong> Once-in-a-lifetime obligation for those able.</li>
+        <li><strong>Taharah (Purification):</strong> Cleanliness before prayer (e.g., wudu).</li>
+      </ul>
+    </section>
+
+    <!-- Quiz Section -->
+    <section>
+      <h2>Quick Quiz: Fiqh</h2>
+
+      <div class="question">
+        <p>1. How many times must Muslims pray each day?</p>
+        <label><input type="radio" name="q1" value="A"> 3</label>
+        <label><input type="radio" name="q1" value="B"> 5</label>
+        <label><input type="radio" name="q1" value="C"> 7</label>
+      </div>
+
+      <div class="question">
+        <p>2. What is the name of the pilgrimage to Makkah?</p>
+        <label><input type="radio" name="q2" value="A"> Zakah</label>
+        <label><input type="radio" name="q2" value="B"> Sawm</label>
+        <label><input type="radio" name="q2" value="C"> Hajj</label>
+      </div>
+
+      <button onclick="submitQuiz()">Submit Quiz</button>
+      <div id="result"></div>
+    </section>
+
+  </div>
+
+  <script>
+    function submitQuiz() {
+      const answers = {
+        q1: "B",
+        q2: "C"
+      };
+
+      let score = 0;
+      let total = Object.keys(answers).length;
+
+      for (let q in answers) {
+        const selected = document.querySelector(`input[name="${q}"]:checked`);
+        if (selected && selected.value === answers[q]) {
+          score++;
+        }
+      }
+
+      const result = document.getElementById("result");
+      result.textContent = `You got ${score} out of ${total} correct. ${score === total ? "Excellent!" : "Keep going, InshaAllah!"}`;
+    }
+  </script>
+
+</body>
+</html>

@@ -2,112 +2,141 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Tic Tac Toe With Jaanu</title>
+  <title>Islamic Study & Quiz</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 50px;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
       background: #f9f9f9;
+      color: #222;
+      max-width: 800px;
+      margin: auto;
+      padding: 40px 20px;
     }
-    h1 {
+
+    h1, h2 {
+      color: #2c3e50;
+    }
+
+    .study {
+      background: #ffffff;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .quiz {
+      margin-top: 40px;
+      padding: 20px;
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .question {
       margin-bottom: 20px;
     }
-    #board {
-      display: grid;
-      grid-template-columns: repeat(3, 100px);
-      gap: 8px;
-      justify-content: center;
-      margin: 0 auto;
+
+    label {
+      display: block;
+      margin: 6px 0;
     }
-    .cell {
-      width: 100px;
-      height: 100px;
-      background: #fff;
-      border: 2px solid #333;
-      font-size: 64px;
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #2ecc71;
+      color: white;
+      border: none;
+      border-radius: 8px;
       cursor: pointer;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      user-select: none;
+      margin-top: 10px;
     }
-    .cell.disabled {
-      cursor: not-allowed;
-      background: #eee;
+
+    button:hover {
+      background: #27ae60;
     }
-    #status {
+
+    #result {
       margin-top: 20px;
-      font-size: 20px;
-      min-height: 24px;
+      font-weight: bold;
+      font-size: 18px;
     }
+
   </style>
 </head>
 <body>
 
-  <h1>Tic Tac Toe With My Jaanu</h1>
-  <div id="board"></div>
-  <div id="status">Connecting to server...</div>
+  <h1>Islamic Study</h1>
 
-  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <div class="study">
+    <h2>What is Islam?</h2>
+    <p>Islam is a monotheistic religion revealed to the Prophet Muhammad ﷺ over 1400 years ago. It teaches that there is only one God (Allah) and that Muhammad ﷺ is His final Messenger.</p>
+
+    <h2>The Five Pillars of Islam</h2>
+    <ul>
+      <li><strong>Shahadah:</strong> Declaration of faith</li>
+      <li><strong>Salah:</strong> Prayer 5 times daily</li>
+      <li><strong>Zakah:</strong> Giving to charity</li>
+      <li><strong>Sawm:</strong> Fasting in Ramadan</li>
+      <li><strong>Hajj:</strong> Pilgrimage to Makkah</li>
+    </ul>
+  </div>
+
+  <div class="quiz">
+    <h2>Quick Quiz</h2>
+
+    <div class="question">
+      <p>1. What is the first pillar of Islam?</p>
+      <label><input type="radio" name="q1" value="A"> Salah</label>
+      <label><input type="radio" name="q1" value="B"> Zakah</label>
+      <label><input type="radio" name="q1" value="C"> Shahadah</label>
+      <label><input type="radio" name="q1" value="D"> Sawm</label>
+    </div>
+
+    <div class="question">
+      <p>2. Who is the final Prophet in Islam?</p>
+      <label><input type="radio" name="q2" value="A"> Isa (Jesus)</label>
+      <label><input type="radio" name="q2" value="B"> Musa (Moses)</label>
+      <label><input type="radio" name="q2" value="C"> Ibrahim (Abraham)</label>
+      <label><input type="radio" name="q2" value="D"> Muhammad ﷺ</label>
+    </div>
+
+    <div class="question">
+      <p>3. What month do Muslims fast in?</p>
+      <label><input type="radio" name="q3" value="A"> Muharram</label>
+      <label><input type="radio" name="q3" value="B"> Ramadan</label>
+      <label><input type="radio" name="q3" value="C"> Shawwal</label>
+      <label><input type="radio" name="q3" value="D"> Dhul-Hijjah</label>
+    </div>
+
+    <button onclick="submitQuiz()">Submit Answers</button>
+
+    <div id="result"></div>
+  </div>
+
   <script>
-    const socket = io('https://tictactoe-server.2079aahmad.repl.co');
-    const board = document.getElementById('board');
-    const status = document.getElementById('status');
-    let symbol = null;
-    let myTurn = false;
-    let gameOver = false;
+    function submitQuiz() {
+      const answers = {
+        q1: "C",
+        q2: "D",
+        q3: "B"
+      };
 
-    // Create 9 cells
-    for(let i = 0; i < 9; i++) {
-      const cell = document.createElement('div');
-      cell.classList.add('cell');
-      cell.dataset.index = i;
-      cell.addEventListener('click', () => {
-        if(myTurn && !cell.textContent && !gameOver) {
-          socket.emit('move', i);
+      let score = 0;
+      let total = 3;
+
+      for (let q in answers) {
+        const selected = document.querySelector(`input[name="${q}"]:checked`);
+        if (selected && selected.value === answers[q]) {
+          score++;
         }
-      });
-      board.appendChild(cell);
-    }
-
-    socket.on('connect', () => {
-      status.textContent = 'Connected. Waiting for game to start...';
-    });
-
-    socket.on('start', (s) => {
-      symbol = s;
-      myTurn = (symbol === 'X');
-      status.textContent = `You are "${symbol}". ${myTurn ? "Your turn!" : "Opponent's turn."}`;
-      clearBoard();
-      gameOver = false;
-    });
-
-    socket.on('move', ({index, symbol: s}) => {
-      const cell = board.querySelector(`[data-index='${index}']`);
-      if(cell) cell.textContent = s;
-      myTurn = (s !== symbol);
-      if (!gameOver) {
-        status.textContent = myTurn ? "Your turn!" : "Opponent's turn.";
       }
-    });
 
-    socket.on('message', (msg) => {
-      status.textContent = msg;
-      if(msg.toLowerCase().includes('wins') || msg.toLowerCase().includes('draw')) {
-        gameOver = true;
-        myTurn = false;
-      }
-    });
-
-    function clearBoard() {
-      board.querySelectorAll('.cell').forEach(cell => cell.textContent = '');
+      const result = document.getElementById("result");
+      result.textContent = `You got ${score} out of ${total} correct. ${score === total ? "MashaAllah!" : "Keep learning, InshaAllah!"}`;
     }
-
-    socket.on('disconnect', () => {
-      status.textContent = 'Disconnected from server.';
-      gameOver = true;
-    });
   </script>
 
 </body>

@@ -1,61 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <title>Home | Islamic Studies</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
- <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #fff;
-      text-align: center;
-      padding: 50px;
-    }
-    nav a {
-      margin: 0 10px;
-      text-decoration: none;
-      color: #007BFF;
-    }
-    #logout {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 16px;
-    }
-  </style>
+  <title>Islamic Studies - Home</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="aqidah.html">Aqidah</a>
-    <a href="fiqh.html">Fiqh</a>
-    <a href="history.html">History</a>
-  </nav>
-
-  <h1>Welcome to Islamic Studies</h1>
-  <p id="welcome-msg">Checking login...</p>
+  <h1>Islamic Studies</h1>
+  <p id="welcome">Checking login...</p>
   <button id="logout" style="display:none;">Logout</button>
 
   <script>
-    const SUPABASE_URL = 'https://hfcjboxijvkycdyepwky.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhmY2pib3hpanZreWNkeWVwd2t5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTMzOTUxMjMsImV4cCI6MjA2ODk3MTEyM30.7hc52WzkRkxSUmbJAAsHLfpVZ_4kblA0MqeBAum1XHY';
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // <-- Put initialization here! -->
+    const supabase = window.supabase.createClient(
+      'https://hfcjboxijvkycdyepwky.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhmY2pib3hpanZreWNkeWVwd2t5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTMzOTUxMjMsImV4cCI6MjA2ODk3MTEyM30.7hc52WzkRkxSUmbJAAsHLfpVZ_4kblA0MqeBAum1XHY'
+    );
 
-    const welcome = document.getElementById('welcome-msg');
-    const logout = document.getElementById('logout');
+    const welcome = document.getElementById("welcome");
+    const logout = document.getElementById("logout");
 
     async function checkUser() {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        window.location.href = "login.html";
+      const { data, error } = await supabase.auth.getUser();
+      if (error || !data.user) {
+        welcome.textContent = "Not logged in. Redirecting...";
+        setTimeout(() => (window.location.href = "login.html"), 1500);
       } else {
-        welcome.textContent = `Asalaamu alaykum, ${user.email}`;
-        logout.style.display = 'inline-block';
+        welcome.textContent = `Asalaamu alaykum, ${data.user.email}`;
+        logout.style.display = "inline-block";
       }
     }
 
-    logout.addEventListener('click', async () => {
+    logout.addEventListener("click", async () => {
       await supabase.auth.signOut();
       window.location.href = "login.html";
     });
@@ -65,4 +41,3 @@
 
 </body>
 </html>
-

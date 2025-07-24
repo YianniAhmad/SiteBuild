@@ -1,1 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Aqidah | Islamic Studies</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">📖 Islamic Studies</div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="aqidah.html">Aqidah</a>
+      <a href="fiqh.html">Fiqh</a>
+      <a href="history.html">History</a>
+      <a href="quiz.html">Quiz</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container">
+
+    <section>
+      <h1>Aqidah (Belief)</h1>
+      <p>Aqidah is the Islamic creed — the foundation of a Muslim’s faith. Believing in Allah, His Angels, His Books, His Messengers, the Day of Judgment, and Divine Decree is essential for every Muslim.</p>
+      <ul>
+        <li><strong>Tawheed (Oneness of Allah):</strong> Allah is One, without partner.</li>
+        <li><strong>Angels:</strong> Created from light, they never disobey Allah.</li>
+        <li><strong>Prophets:</strong> Messengers sent by Allah to guide humanity.</li>
+        <li><strong>Books:</strong> Divine revelations like the Qur’an, Torah, Injil.</li>
+        <li><strong>Day of Judgment:</strong> Everyone will be held accountable.</li>
+        <li><strong>Qadr:</strong> Everything happens by Allah’s will and knowledge.</li>
+      </ul>
+    </section>
+
+    <!-- Quiz Section -->
+    <section>
+      <h2>Quick Quiz: Aqidah</h2>
+
+      <div class="question">
+        <p>1. What does Tawheed mean?</p>
+        <label><input type="radio" name="q1" value="A"> Believing in Angels</label>
+        <label><input type="radio" name="q1" value="B"> Oneness of Allah</label>
+        <label><input type="radio" name="q1" value="C"> Day of Judgment</label>
+      </div>
+
+      <div class="question">
+        <p>2. What are angels created from?</p>
+        <label><input type="radio" name="q2" value="A"> Fire</label>
+        <label><input type="radio" name="q2" value="B"> Clay</label>
+        <label><input type="radio" name="q2" value="C"> Light</label>
+      </div>
+
+      <button onclick="submitQuiz()">Submit Quiz</button>
+      <div id="result"></div>
+    </section>
+
+  </div>
+
+  <!-- Quiz Script -->
+  <script>
+    function submitQuiz() {
+      const answers = {
+        q1: "B",
+        q2: "C"
+      };
+
+      let score = 0;
+      let total = Object.keys(answers).length;
+
+      for (let q in answers) {
+        const selected = document.querySelector(`input[name="${q}"]:checked`);
+        if (selected && selected.value === answers[q]) {
+          score++;
+        }
+      }
+
+      const result = document.getElementById("result");
+      result.textContent = `You got ${score} out of ${total} correct. ${score === total ? "MashaAllah!" : "Good try! Keep studying, InshaAllah."}`;
+    }
+  </script>
+
+</body>
+</html>
 
